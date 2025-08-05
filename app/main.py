@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from routers import elevator
+from app.routers import elevator
 from auth import auth_router
 
 app = FastAPI()
