@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン | 日本エレベーター管理検査管理ツール</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #121212;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+        }
+        .login-container h1 {
+            color: orange;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .login-container h2 {
+            color: white;
+            text-align: center;
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        .login-container label {
+            display: block;
+            margin-top: 15px;
+            color: white;
+        }
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+        .login-container input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: orange;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>日本エレベーター管理検査管理ツール</h1>
+    <h2>ログインページ</h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        <label for="email">ユーザーID（メール）</label>
+        <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" id="password" name="password" placeholder="パスワード" required>
+
+        <input type="submit" value="ログイン">
+    </form>
+</div>
+</body>
+</html>

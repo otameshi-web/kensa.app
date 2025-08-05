@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日本エレベーター管理検査管理ツール</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    .brand-orange {
+      background-color: #ff6600;
+    }
+    input, select {
+      color: black;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md bg-gray-900 p-6 rounded-xl shadow-xl">
+    <h1 class="text-2xl font-bold text-center brand-orange py-2 rounded mb-6">日本エレベーター管理検査管理ツール</h1>
+
+    <form id="searchForm">
+      <label for="kanriBangou" class="block mb-2 text-sm font-medium">管理番号</label>
+      <input type="text" id="kanriBangou" name="kanriBangou" list="kanriList"
+             class="w-full px-4 py-2 rounded border border-gray-300 mb-4" placeholder="例: N42-0001" required>
+      <datalist id="kanriList">
+        <!-- APIから候補が追加される -->
+      </datalist>
+
+      <div class="bg-gray-800 text-sm p-4 rounded mb-4">
+        <p><strong>現場名：</strong><span id="genbaName">---</span></p>
+        <p><strong>メーカー：</strong><span id="maker">---</span></p>
+        <p><strong>機種：</strong><span id="model">---</span></p>
+      </div>
+
+      <button type="submit" class="w-full py-2 rounded font-bold brand-orange text-white hover:opacity-90 transition">次へ</button>
+    </form>
+  </div>
+
+  <script>
+    const input = document.getElementById('kanriBangou');
+    const genba = document.getElementById('genbaName');
+    const maker = document.getElementById('maker');
+    const model = document.getElementById('model');
+    const datalist = document.getElementById('kanriList');
+
+    // 入力変更時にAPIから情報取得
+    input.addEventListener("input", async () => {
+      const value = input.value;
+      try {
+        const res = await fetch(`/api/elevator?kanri=${encodeURIComponent(value)}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        genba.textContent = data.genba;
+        maker.textContent = data.maker;
+        model.textContent = data.model;
+      } catch {
+        genba.textContent = "---";
+        maker.textContent = "---";
+        model.textContent = "---";
+      }
+    });
+
+    // フォーム送信（遷移）
+    document.getElementById('searchForm').addEventListener("submit", e => {
+      e.preventDefault();
+      const value = input.value;
+      if (genba.textContent !== '---') {
+        window.location.href = "/inspection/select?kanri=" + encodeURIComponent(value);
+      } else {
+        alert("管理番号が見つかりません。");
+      }
+    });
+
+    // datalist候補初期化（全管理番号をAPI経由で取得）
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("/api/elevator/list");
+        const data = await res.json();
+        data.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item;
+          datalist.appendChild(option);
+        });
+      } catch {
+        console.warn("候補の取得に失敗しました。");
+      }
+    });
+  </script>
+</body>
+</html>
