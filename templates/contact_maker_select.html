@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>製造メーカー選択</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #000; color: #fff; }
+    .brand-orange { background-color: #ff6600; }
+
+    .button-pair { display:flex; align-items:center; justify-content:flex-start; position:relative; cursor:pointer; margin-bottom:1.5rem; }
+    .circle-icon { width:70px; height:70px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-size:28px; color:#fff; box-shadow:4px 4px 20px rgba(0,0,0,1); position:relative; z-index:2; }
+    .oval-label { margin-left:-30px; padding:0.75rem 2.5rem; background:#fff; color:#111827; border-radius:9999px; font-weight:bold; font-size:1rem; box-shadow:0 4px 8px rgba(0,0,0,.2); z-index:1; min-width:160px; text-align:right; }
+    .button-pair:hover { transform:scale(1.03); transition:all .2s ease-in-out; }
+
+    .button-grid { display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media (min-width: 500px) { .button-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* 色は項目ページのトーンに合わせつつ、メーカーごとに割当 */
+    .bg-mitsubishi { background-color:#ef4444; } /* 三菱 */
+    .bg-toshiba    { background-color:#3b82f6; } /* 東芝 */
+    .bg-hitachi    { background-color:#10b981; } /* 日立 */
+    .bg-otis       { background-color:#eab308; } /* オーチス */
+    .bg-fujitec    { background-color:#6366f1; } /* フジテック */
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative">
+
+  <!-- ログアウト -->
+  <div class="absolute top-4 right-4">
+    <a href="/logout" class="text-sm text-orange-400 hover:underline">ログアウト</a>
+  </div>
+
+  <div class="w-full max-w-md bg-gray-900 p-6 rounded-xl shadow-xl">
+    <!-- タイトル -->
+    <h1 class="text-xl font-bold text-center brand-orange py-2 rounded mb-6">製造メーカー選択</h1>
+
+    <!-- 管理番号・現場名 -->
+    <div class="bg-gray-800 text-sm p-4 rounded mb-6">
+      <p><strong>管理番号：</strong>{{ kanri }}</p>
+      <p><strong>現場名：</strong><span>{{ genba }}</span></p>
+    </div>
+
+    <!-- メーカーボタン群（電磁接触器ページと同じ要素構造/動き） -->
+    <div class="button-grid">
+
+      <a href="/inspection/contact/mitsubishi?kanri={{ kanri }}" class="button-pair">
+        <div class="circle-icon bg-mitsubishi">三</div>
+        <div class="oval-label">三菱</div>
+      </a>
+
+      <a href="/inspection/contact/toshiba?kanri={{ kanri }}" class="button-pair">
+        <div class="circle-icon bg-toshiba">東</div>
+        <div class="oval-label">東芝</div>
+      </a>
+
+      <a href="/inspection/contact/hitachi?kanri={{ kanri }}" class="button-pair">
+        <div class="circle-icon bg-hitachi">日</div>
+        <div class="oval-label">日立</div>
+      </a>
+
+      <a href="/inspection/contact/otis?kanri={{ kanri }}" class="button-pair">
+        <div class="circle-icon bg-otis">オ</div>
+        <div class="oval-label">オーチス</div>
+      </a>
+
+      <a href="/inspection/contact/fujitec?kanri={{ kanri }}" class="button-pair">
+        <div class="circle-icon bg-fujitec">フ</div>
+        <div class="oval-label">フジテック</div>
+      </a>
+
+    </div>
+  </div>
+</body>
+</html>

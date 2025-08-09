@@ -16,9 +16,17 @@
     input, select {
       color: black;
     }
+    .logout-link {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+  <!-- ログアウトリンク -->
+  <a href="/logout" class="logout-link text-sm text-white underline hover:text-orange-400">ログアウト</a>
+
   <div class="w-full max-w-md bg-gray-900 p-6 rounded-xl shadow-xl">
     <h1 class="text-2xl font-bold text-center brand-orange py-2 rounded mb-6">日本エレベーター管理検査管理ツール</h1>
 

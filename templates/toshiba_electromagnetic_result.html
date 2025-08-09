@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東芝 電磁接触器 結果</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { background:#000; color:#fff; }
+    .brand-orange{ background:#ff6600; }
+    table { width:100%; }
+    th, td { padding:.5rem; }
+    th { width:45%; text-align:left; color:#ddd; }
+    td { color:#fff; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+  <div class="w-full max-w-3xl bg-gray-900 p-6 rounded-xl shadow-xl mt-8">
+    <h1 class="text-xl font-bold text-center brand-orange py-2 rounded mb-6">東芝 電磁接触器 結果</h1>
+
+    <h2 class="text-lg font-semibold mb-2">選択内容</h2>
+    <div class="bg-gray-800 rounded p-4 mb-6 text-sm">
+      <ul>
+        {% for k, v in choices.items() %}
+          {% if v %}<li><span class="text-gray-300">{{k}}</span>：{{v}}</li>{% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    <h2 class="text-lg font-semibold mb-2">判定結果</h2>
+
+    {% for g in grouped %}
+      <div class="bg-gray-800 rounded p-4 mb-4">
+        <h3 class="font-bold text-base mb-2">{{ g.title }}</h3>
+        <table class="text-sm">
+          <tbody>
+            {% for r in g.rows %}
+            <tr>
+              <th>{{ r.label }}</th>
+              <td>{{ r.value }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+
+    {% if extra_notes %}
+      <div class="bg-gray-800 rounded p-4 mb-4">
+        <h3 class="font-bold text-base mb-2">備考</h3>
+        <div class="text-sm">{{ extra_notes }}</div>
+      </div>
+    {% endif %}
+
+    <div class="mt-6 flex gap-3">
+      <a href="javascript:history.back()" class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600">戻る</a>
+      <a href="/" class="px-4 py-2 rounded bg-yellow-500 text-black font-bold">トップへ</a>
+    </div>
+  </div>
+</body>
+</html>

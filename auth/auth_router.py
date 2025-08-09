@@ -40,3 +40,9 @@ async def login(
             "request": request,
             "error": f"システムエラー: {str(e)}"
         })
+
+# 👇 これを追加することでログアウト機能が有効になります
+@router.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse(url="/login", status_code=302)
